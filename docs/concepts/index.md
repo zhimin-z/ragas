@@ -3,15 +3,6 @@
 
 <div class="grid cards" markdown>
 
--   :material-widgets:{ .lg .middle } [__Components Guides__](components/index.md)
-
-    ---
-
-    Discover the various components used within Ragas.
-    
-    Components like [Prompt Object](components/prompt.md), [Evaluation Dataset](components/eval_dataset.md) and [more..](components/index.md)
-
-
 -   ::material-ruler-square:{ .lg .middle } [__Ragas Metrics__](metrics/index.md)
 
     ---
