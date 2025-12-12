@@ -6,12 +6,14 @@
 
 ## Executive Summary
 
-This document analyzes the Ragas evaluation harness to identify which strategies from the unified evaluation workflow are supported. Ragas is a comprehensive evaluation toolkit for Large Language Model (LLM) applications, with strong support for RAG evaluation, synthetic test generation, and LLM-based metrics.
+This document analyzes the Ragas evaluation harness to identify which strategies from the unified evaluation workflow are **natively supported**. A strategy is considered "supported" only if it can be used directly after installing Ragas, without requiring external integrations, monitoring tools, or custom glue code.
+
+Ragas is a comprehensive evaluation toolkit for Large Language Model (LLM) applications, with strong native support for RAG evaluation, synthetic test generation, and LLM-based metrics.
 
 **Key Findings:**
-- **Strong Support:** Phase I (Specification) and Phase III (Assessment)
-- **Moderate Support:** Phase 0 (Provisioning) and Phase II (Execution)
-- **Limited Support:** Phase IV (Reporting)
+- **Strong Native Support:** Phase I (Specification) and Phase III (Assessment)
+- **Moderate Native Support:** Phase 0 (Provisioning) and Phase II (Execution)  
+- **Limited Native Support:** Phase IV (Reporting)
 
 ---
 
@@ -76,11 +78,12 @@ This document analyzes the Ragas evaluation harness to identify which strategies
 - `/docs/howtos/integrations/gemini.md`
 - `/docs/howtos/integrations/amazon_bedrock.md`
 
-#### ⚠️ **Strategy 3: Repository Authentication** - PARTIALLY SUPPORTED
+#### ❌ **Strategy 3: Repository Authentication** - NOT SUPPORTED
 **Evidence:**
-- Can access Hugging Face datasets and models
-- Authentication handled through underlying libraries (transformers, datasets)
-- Not explicitly documented in Ragas docs but supported through dependencies
+- No native repository authentication in Ragas
+- Authentication handled through external libraries (transformers, datasets)
+- Requires users to configure authentication with underlying dependencies
+- Not part of Ragas's native functionality
 
 ---
 
@@ -183,19 +186,20 @@ This document analyzes the Ragas evaluation harness to identify which strategies
 - No support for 3D virtual environments, physics simulation, or scene construction
 - Focus is on LLM/RAG applications, not embodied AI or robotics
 
-#### ⚠️ **Strategy 4: Production Traffic Sampling (Online)** - PARTIALLY SUPPORTED
+#### ❌ **Strategy 4: Production Traffic Sampling (Online)** - NOT SUPPORTED
 **Evidence:**
-- Can use production data through integrations:
+- No native production traffic sampling within Ragas
+- Requires external integrations and glue code:
   - Langfuse (fetch production traces)
   - TruLens (production monitoring)
   - Evidently (production monitoring)
   - Athina (production log analysis)
-- No native production traffic sampling within Ragas itself
+- Users must implement integration code to use production data
 
 **Documentation References:**
-- `/docs/howtos/integrations/_langfuse.md` (mentions fetching production data)
-- `/docs/howtos/observability.md` (Phoenix/Arize integration)
-- `/docs/howtos/integrations/_athina.md` (production logs)
+- `/docs/howtos/integrations/_langfuse.md` (external integration)
+- `/docs/howtos/observability.md` (external integration)
+- `/docs/howtos/integrations/_athina.md` (external integration)
 
 ### Step C: Benchmark Preparation (References)
 
@@ -276,18 +280,18 @@ This document analyzes the Ragas evaluation harness to identify which strategies
 - `/docs/concepts/experimentation.md` (A/B Testing section)
 - `/docs/howtos/applications/benchmark_llm.md`
 
-#### ⚠️ **Strategy 4: Production Streaming** - PARTIALLY SUPPORTED
+#### ❌ **Strategy 4: Production Streaming** - NOT SUPPORTED
 **Evidence:**
-- Production monitoring through third-party integrations:
+- No native streaming infrastructure in Ragas
+- Requires external integrations and glue code:
   - TruLens (real-time monitoring)
   - Evidently (drift monitoring)
   - Athina (production logs with automatic Ragas metrics)
-- No native streaming infrastructure in Ragas
-- Integrations handle real-time metric collection
+- Users must implement integration code for real-time metric collection
 
 **Documentation References:**
-- `/docs/howtos/observability.md`
-- `/docs/howtos/integrations/_athina.md`
+- `/docs/howtos/observability.md` (external integration)
+- `/docs/howtos/integrations/_athina.md` (external integration)
 
 ---
 
@@ -380,20 +384,20 @@ This document analyzes the Ragas evaluation harness to identify which strategies
 
 ### Step A: Insight Presentation
 
-#### ⚠️ **Strategy 1: Execution Tracing** - PARTIALLY SUPPORTED
+#### ❌ **Strategy 1: Execution Tracing** - NOT SUPPORTED
 **Evidence:**
-- Integration with tracing platforms:
+- No native tracing in Ragas
+- Requires external integrations and glue code:
   - LangSmith (detailed traces)
   - Phoenix/Arize (trace visualization)
   - Langfuse (trace analysis)
-  - OpenTelemetry support via OpenInference
-- No native tracing in Ragas itself
-- Relies on third-party integrations
+  - OpenTelemetry via OpenInference
+- Users must implement integration code to enable tracing
 
 **Documentation References:**
-- `/docs/howtos/observability.md`
-- `/docs/howtos/integrations/_langsmith.md`
-- `/docs/howtos/integrations/_langfuse.md`
+- `/docs/howtos/observability.md` (external integrations)
+- `/docs/howtos/integrations/_langsmith.md` (external integration)
+- `/docs/howtos/integrations/_langfuse.md` (external integration)
 
 #### ❌ **Strategy 2: Subgroup Analysis** - NOT SUPPORTED
 **Evidence:**
@@ -402,31 +406,32 @@ This document analyzes the Ragas evaluation harness to identify which strategies
 - No domain-based performance breakdown
 - Would need custom analysis on exported results
 
-#### ⚠️ **Strategy 3: Chart Generation** - PARTIALLY SUPPORTED
+#### ❌ **Strategy 3: Chart Generation** - NOT SUPPORTED
 **Evidence:**
-- Basic result display in console
-- Results saved to CSV for external visualization
-- Integration with Phoenix for embedding visualization
 - No native chart generation within Ragas
+- Basic result display in console (text output only)
+- Results saved to CSV for external visualization
+- Requires external tools (Phoenix, matplotlib, etc.) for any visual charts
 
 **Documentation References:**
-- `/docs/getstarted/quickstart.md` (shows console output)
-- `/docs/howtos/observability.md` (Phoenix visualization)
+- `/docs/getstarted/quickstart.md` (shows console text output)
+- `/docs/howtos/observability.md` (external Phoenix integration for visualization)
 
-#### ⚠️ **Strategy 4: Dashboard Creation** - PARTIALLY SUPPORTED
+#### ❌ **Strategy 4: Dashboard Creation** - NOT SUPPORTED
 **Evidence:**
-- Dashboard capabilities through integrations:
+- No native dashboard in Ragas
+- Requires external integrations and glue code:
   - Phoenix/Arize (embedding visualization, cluster analysis)
   - Langfuse (evaluation dashboards)
   - Athina (evaluation dashboard)
   - Zeno (interactive evaluation browser)
-- No native dashboard in Ragas
+- Users must implement integration code to create dashboards
 
 **Documentation References:**
-- `/docs/howtos/observability.md`
-- `/docs/howtos/integrations/_langfuse.md`
-- `/docs/howtos/integrations/_athina.md`
-- `/docs/howtos/integrations/_zeno.md`
+- `/docs/howtos/observability.md` (external integration)
+- `/docs/howtos/integrations/_langfuse.md` (external integration)
+- `/docs/howtos/integrations/_athina.md` (external integration)
+- `/docs/howtos/integrations/_zeno.md` (external integration)
 
 #### ❌ **Strategy 5: Leaderboard Publication** - NOT SUPPORTED
 **Evidence:**
@@ -457,7 +462,7 @@ This document analyzes the Ragas evaluation harness to identify which strategies
 | 0.A.5 Node Package | ❌ None | Python-only |
 | 0.B.1 Platform Auth | ❌ None | No Ragas platform |
 | 0.B.2 API Provider Auth | ✅ Full | Multiple providers supported |
-| 0.B.3 Repository Auth | ⚠️ Partial | Via dependencies |
+| 0.B.3 Repository Auth | ❌ None | External libraries required |
 
 ### Phase I: Specification
 | Strategy | Support Level | Notes |
@@ -465,11 +470,11 @@ This document analyzes the Ragas evaluation harness to identify which strategies
 | I.A.1 Model-as-a-Service | ✅ Full | Primary use case |
 | I.A.2 Model-in-Process | ✅ Full | Local models supported |
 | I.A.3 Algorithm Implementation | ❌ None | Not applicable |
-| I.A.4 Policy/Agent | ⚠️ Partial | Agent metrics, limited RL |
+| I.A.4 Policy/Agent | ⚠️ Partial | Native agent metrics & schemas |
 | I.B.1 Benchmark Datasets | ✅ Full | Multiple backends |
 | I.B.2 Synthetic Generation | ✅ Full | Core feature |
 | I.B.3 Simulation Environment | ❌ None | Not applicable |
-| I.B.4 Production Sampling | ⚠️ Partial | Via integrations |
+| I.B.4 Production Sampling | ❌ None | External integrations required |
 | I.C.1 Judge Preparation | ✅ Full | Core strength |
 | I.C.2 Ground Truth | ✅ Full | Well supported |
 
@@ -477,9 +482,9 @@ This document analyzes the Ragas evaluation harness to identify which strategies
 | Strategy | Support Level | Notes |
 |----------|--------------|-------|
 | II.A.1 Batch Inference | ✅ Full | Primary mode |
-| II.A.2 Interactive Loop | ⚠️ Partial | Agent support |
-| II.A.3 Arena Battle | ⚠️ Partial | Via A/B pattern |
-| II.A.4 Production Streaming | ⚠️ Partial | Via integrations |
+| II.A.2 Interactive Loop | ⚠️ Partial | Native multi-turn support |
+| II.A.3 Arena Battle | ⚠️ Partial | Native A/B pattern |
+| II.A.4 Production Streaming | ❌ None | External integrations required |
 
 ### Phase III: Assessment
 | Strategy | Support Level | Notes |
@@ -494,10 +499,10 @@ This document analyzes the Ragas evaluation harness to identify which strategies
 ### Phase IV: Reporting
 | Strategy | Support Level | Notes |
 |----------|--------------|-------|
-| IV.A.1 Execution Tracing | ⚠️ Partial | Via integrations |
+| IV.A.1 Execution Tracing | ❌ None | External integrations required |
 | IV.A.2 Subgroup Analysis | ❌ None | Not available |
-| IV.A.3 Chart Generation | ⚠️ Partial | CSV export only |
-| IV.A.4 Dashboard Creation | ⚠️ Partial | Via integrations |
+| IV.A.3 Chart Generation | ❌ None | External tools required |
+| IV.A.4 Dashboard Creation | ❌ None | External integrations required |
 | IV.A.5 Leaderboard | ❌ None | Not available |
 | IV.A.6 Regression Alerting | ❌ None | Not available |
 
@@ -513,11 +518,12 @@ This document analyzes the Ragas evaluation harness to identify which strategies
 5. **Metrics Library**: Extensive collection of RAG and LLM evaluation metrics
 
 ### Gaps
-1. **Performance Measurement**: No latency, throughput, or resource metrics
-2. **Native Reporting**: Limited visualization without third-party tools
-3. **Production Features**: Relies on integrations for streaming and alerting
-4. **Uncertainty Quantification**: No statistical confidence measures
-5. **Container Support**: No Docker/OCI images
+1. **Performance Measurement**: No native latency, throughput, or resource metrics
+2. **Reporting & Visualization**: No native dashboards, charts, or tracing (requires external tools)
+3. **Production Features**: No native production streaming, traffic sampling, or alerting (requires external integrations)
+4. **Uncertainty Quantification**: No statistical confidence measures or bootstrap resampling
+5. **Container Support**: No Docker/OCI images or containerized deployment options
+6. **Repository Authentication**: No native authentication for model/dataset repositories (handled by external libraries)
 
 ### Recommended Use Cases
 - ✅ RAG system evaluation
@@ -532,9 +538,9 @@ This document analyzes the Ragas evaluation harness to identify which strategies
 ---
 
 ## Legend
-- ✅ **Full Support**: Feature is well-documented and core to the framework
-- ⚠️ **Partial Support**: Feature exists but with limitations or via integrations
-- ❌ **No Support**: Feature is not available or not applicable
+- ✅ **Full Support**: Feature is natively available in Ragas after installation, without requiring external integrations or glue code
+- ⚠️ **Partial Support**: Feature is natively available but with significant limitations (e.g., limited to specific use cases)
+- ❌ **No Support**: Feature is not natively available in Ragas (requires external integrations, glue code, or is not applicable)
 
 ---
 
