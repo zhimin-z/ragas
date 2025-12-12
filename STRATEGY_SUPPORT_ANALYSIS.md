@@ -78,12 +78,16 @@ Ragas is a comprehensive evaluation toolkit for Large Language Model (LLM) appli
 - `/docs/howtos/integrations/gemini.md`
 - `/docs/howtos/integrations/amazon_bedrock.md`
 
-#### ❌ **Strategy 3: Repository Authentication** - NOT SUPPORTED
+#### ✅ **Strategy 3: Repository Authentication** - SUPPORTED
 **Evidence:**
-- No native repository authentication in Ragas
-- Authentication handled through external libraries (transformers, datasets)
-- Requires users to configure authentication with underlying dependencies
-- Not part of Ragas's native functionality
+- Native support for Hugging Face repository authentication via environment variables and CLI
+- Users can set `HF_TOKEN` environment variable for gated datasets/models
+- Documentation shows `huggingface-cli login` for authentication
+- Works directly with Ragas after standard authentication setup
+
+**Documentation References:**
+- `/docs/howtos/applications/text2sql.md` (HF_TOKEN usage, huggingface-cli login)
+- `/docs/howtos/applications/compare_llms.md` (HuggingFace token setup)
 
 ---
 
@@ -269,16 +273,16 @@ Ragas is a comprehensive evaluation toolkit for Large Language Model (LLM) appli
 - `/docs/concepts/metrics/available_metrics/agents.md`
 - `/docs/howtos/integrations/_langgraph_agent_evaluation.md`
 
-#### ⚠️ **Strategy 3: Arena Battle** - PARTIALLY SUPPORTED
+#### ❌ **Strategy 3: Arena Battle** - NOT SUPPORTED
 **Evidence:**
-- A/B testing pattern documented in experimentation guide
-- Can run same dataset through multiple models and compare
-- No dedicated arena battle infrastructure
-- Comparison done post-hoc rather than head-to-head
+- No native arena battle infrastructure in Ragas
+- A/B testing pattern is just separate batch inference runs for different models
+- Cannot execute the same input across multiple SUTs simultaneously for head-to-head comparison
+- Comparison done post-hoc after separate batch runs, not true arena-style pairwise comparison
 
 **Documentation References:**
-- `/docs/concepts/experimentation.md` (A/B Testing section)
-- `/docs/howtos/applications/benchmark_llm.md`
+- `/docs/concepts/experimentation.md` (A/B Testing as separate batch runs)
+- `/docs/howtos/applications/benchmark_llm.md` (separate evaluation runs)
 
 #### ❌ **Strategy 4: Production Streaming** - NOT SUPPORTED
 **Evidence:**
@@ -462,7 +466,7 @@ Ragas is a comprehensive evaluation toolkit for Large Language Model (LLM) appli
 | 0.A.5 Node Package | ❌ None | Python-only |
 | 0.B.1 Platform Auth | ❌ None | No Ragas platform |
 | 0.B.2 API Provider Auth | ✅ Full | Multiple providers supported |
-| 0.B.3 Repository Auth | ❌ None | External libraries required |
+| 0.B.3 Repository Auth | ✅ Full | HF_TOKEN, huggingface-cli |
 
 ### Phase I: Specification
 | Strategy | Support Level | Notes |
@@ -483,7 +487,7 @@ Ragas is a comprehensive evaluation toolkit for Large Language Model (LLM) appli
 |----------|--------------|-------|
 | II.A.1 Batch Inference | ✅ Full | Primary mode |
 | II.A.2 Interactive Loop | ⚠️ Partial | Native multi-turn support |
-| II.A.3 Arena Battle | ⚠️ Partial | Native A/B pattern |
+| II.A.3 Arena Battle | ❌ None | Separate batch runs, not true arena |
 | II.A.4 Production Streaming | ❌ None | External integrations required |
 
 ### Phase III: Assessment
